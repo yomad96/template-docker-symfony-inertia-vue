@@ -1,0 +1,25 @@
+services:
+  node:
+    image: node:22-alpine
+    container_name: ${APP_NAME}_node
+    working_dir: /var/www/html
+    init: true
+    volumes:
+      - ../../app:/var/www/html:rw
+      # Évite de mélanger les binaires Linux du conteneur avec ceux de la machine hôte.
+      - node_modules:/var/www/html/node_modules
+    ports:
+      - "5173:5173"
+    command:
+      - sh
+      - -c
+      - |
+        if [ -f package-lock.json ]; then
+          npm ci
+        elif [ -f package.json ]; then
+          npm install
+        else
+          echo "Aucun package.json pour le moment : le conteneur Node reste disponible."
+          exec tail -f /dev/null
+        fi
+        exec npm run dev -- --host 0.0.0.0

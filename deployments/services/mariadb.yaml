@@ -1,0 +1,20 @@
+services:
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-11.4}
+    container_name: ${APP_NAME}_mariadb
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-esport_master}
+      MARIADB_USER: ${MARIADB_USER:-esport_master}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:-ChangeMeDatabaseUser}
+      MARIADB_ROOT_USER: ${MARIADB_ROOT_USER:-root}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-ChangeMeRoot}
+    ports:
+      - "${MARIADB_PORT:-3306}:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u${MARIADB_ROOT_USER:-root} -p${MARIADB_ROOT_PASSWORD:-ChangeMeRoot} --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s

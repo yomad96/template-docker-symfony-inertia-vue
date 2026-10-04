@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: deployments/local/Dockerfile
+    working_dir: /var/www/html
+    container_name: ${APP_NAME}_app
+    environment:
+      DATABASE_URL: "mysql://${MARIADB_USER:-esport_master}:${MARIADB_PASSWORD:-ChangeMeDatabaseUser}@mariadb:3306/${MARIADB_DATABASE:-esport_master}?serverVersion=mariadb-${MARIADB_SERVER_VERSION:-11.4.0}&charset=utf8mb4"
+    volumes:
+      - ../../app:/var/www/html:rw
+      - ../local/php.ini:/usr/local/etc/php/conf.d/php.ini:rw
+    ports:
+      - "8000:80"

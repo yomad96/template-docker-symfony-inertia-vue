@@ -1,0 +1,34 @@
+services:
+
+  ###> containers ###
+  ###> app ###
+  app:
+    extends:
+      file: ../services/app.yaml
+      service: app
+    networks:
+      - app-network
+    depends_on:
+      mariadb:
+        condition: service_healthy
+  node:
+    extends:
+      file: ../services/node.yaml
+      service: node
+    networks:
+      - app-network
+  mariadb:
+    extends:
+      file: ../services/mariadb.yaml
+      service: mariadb
+    networks:
+      - app-network
+### containers ###
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+  mariadb_data:
