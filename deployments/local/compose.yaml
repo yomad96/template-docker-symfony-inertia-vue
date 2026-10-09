@@ -32,3 +32,4 @@ networks:
 volumes:
   node_modules:
   mariadb_data:
+    name: "mariadb_data_${APP_NAME}"
