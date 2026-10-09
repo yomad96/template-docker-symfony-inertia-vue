@@ -3,8 +3,8 @@ services:
     image: mariadb:${MARIADB_VERSION:-11.4}
     container_name: ${APP_NAME}_mariadb
     environment:
-      MARIADB_DATABASE: ${MARIADB_DATABASE:-esport_master}
-      MARIADB_USER: ${MARIADB_USER:-esport_master}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-template_master}
+      MARIADB_USER: ${MARIADB_USER:-template_master}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD:-ChangeMeDatabaseUser}
       MARIADB_ROOT_USER: ${MARIADB_ROOT_USER:-root}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-ChangeMeRoot}
