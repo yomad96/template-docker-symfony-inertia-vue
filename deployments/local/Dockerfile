@@ -20,11 +20,11 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --optimize-auto
 # Copier le reste du code
 COPY app/ /var/www/html/
 
-COPY deployments/local/apache.conf /etc/apache2/conf-available/esport-master.conf
+COPY deployments/local/apache.conf /etc/apache2/conf-available/template-master.conf
 
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' \
   /etc/apache2/sites-available/000-default.conf \
-  && a2enconf esport-master
+  && a2enconf template-master
 
 EXPOSE 80
 CMD ["apache2-foreground"]
